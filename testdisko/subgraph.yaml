@@ -1,0 +1,29 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: ResolutionMock
+    network: rinkeby
+    source:
+      address: "0xec7845471b427e87c7824b978aaf11a9d677b768"
+      abi: ResolutionMock
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - ResolutionApproved
+        - ResolutionCreated
+        - ResolutionUpdated
+      abis:
+        - name: ResolutionMock
+          file: ./abis/ResolutionMock.json
+      eventHandlers:
+        - event: ResolutionApproved(indexed address,indexed uint256)
+          handler: handleResolutionApproved
+        - event: ResolutionCreated(indexed address,indexed uint256)
+          handler: handleResolutionCreated
+        - event: ResolutionUpdated(indexed address,indexed uint256)
+          handler: handleResolutionUpdated
+      file: ./src/mapping.ts
